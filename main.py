@@ -1,6 +1,7 @@
 import cv2
 import winsound
 from time import sleep as s
+from time import localtime as lct
 
 # Global Vars
 
@@ -10,9 +11,7 @@ sens = 750              # Sensitivity (lower values give higher sensitivity)
 iter = 5                # Iterations  (use lower value for faster processing)
 thick = 3               # Box Boundary Thickness
 motion = False          # Initialized State
-
 cap = cv2.VideoCapture(0)
-
 
 def pre_process():
     global blur_fac, frame1, cap, blur
@@ -51,6 +50,8 @@ def warning():
         winsound.PlaySound('alarm.wav', winsound.SND_ASYNC)
         motion = False
         s(0.001)
+        year, month, day, hour, min, sec, _, _, _ = lct()
+        print('Motion Detected at', year, month, day, '-', hour, ':', min, ':', sec)
 
 
 def display():
